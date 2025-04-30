@@ -1,8 +1,10 @@
 const express = require("express")
+const { books } = require("./database/connection")
+
 const app = express()
 
 require("./database/connection")
-
+app.use(express.json())
 // let app = require("express")()
 
 
@@ -27,15 +29,31 @@ require("./database/connection")
 
 
 
-app.get("/books",function(req,res) {
+app.get("/books",async function(req,res) {
     // logic to fetch books from database
+    const datas = await books.findAll()
     res.json ({
-        message: "Book fetched successfully"
+        message: "Book fetched successfully",
+        datas
     })
 })
 
-app.post("/books", function(req,res) {
+app.post("/books",async function(req,res) {
     // logic to add book to database goes here...
+    console.log(req.body)
+    // const bookName = req.body.bookName
+    // const bookPrice = req.body.bookPrice
+
+    const {bookName, bookPrice, bookAuthor, bookGenre} = req.body
+    await books.create({
+        bookName,
+        bookPrice,
+        bookAuthor,
+        bookGenre
+
+    })
+    // console.log(bookName)
+    // console.log(bookPrice)
     res.json ({
         message : "Book added successfully"
     })
