@@ -1,11 +1,27 @@
 const express = require("express")
-const { books } = require("./database/connection")
+const { fetchBooks, addBooks, deleteBooks, editBooks, } = require("./database/connection")
+
+require("./routes/bookRoute")
 
 const app = express()
 
 require("./database/connection")
 app.use(express.json())
 // let app = require("express")()
+
+app.use("",bookRoute)
+
+app.get("/books",fetchBooks)
+app.post("/books",addBooks)
+app.delete("/books/:id",deleteBooks)
+app.patch("/books/:id",editBooks)
+
+
+postgresql://postgres.bcvvahchzmzecehwmhad:@sushit3061@@aws-0-ap-south-1.pooler.supabase.com:6543/postgres
+
+app.listen(4000,function() {
+    console.log ("Project /backend has started at port 4000")
+})
 
 
 // app.get("/",(req,res)=>{
@@ -26,56 +42,3 @@ app.use(express.json())
 //         name: "Registered successfull!!!"
 //     })
 // })
-
-
-
-app.get("/books",async function(req,res) {
-    // logic to fetch books from database
-    const datas = await books.findAll()
-    res.json ({
-        message: "Book fetched successfully",
-        datas
-    })
-})
-
-app.post("/books",async function(req,res) {
-    // logic to add book to database goes here...
-    console.log(req.body)
-    // const bookName = req.body.bookName
-    // const bookPrice = req.body.bookPrice
-
-    const {bookName, bookPrice, bookAuthor, bookGenre} = req.body
-    await books.create({
-        bookName,
-        bookPrice,
-        bookAuthor,
-        bookGenre
-
-    })
-    // console.log(bookName)
-    // console.log(bookPrice)
-    res.json ({
-        message : "Book added successfully"
-    })
-})
-
-app.delete("/books/:id", function(req,res){
-    // logic to delete book
-    res.json({
-        message : "Book added successfully"
-    })
-})
-
-app.patch("/books/:id", function(req,res){
-    // logic to update book
-    res.json({
-        message : "Book updated successfully"
-    })
-})
-
-
-postgresql://postgres.bcvvahchzmzecehwmhad:@sushit3061@@aws-0-ap-south-1.pooler.supabase.com:6543/postgres
-
-app.listen(4000,function() {
-    console.log ("Project /backend has started at port 4000")
-})
