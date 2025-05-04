@@ -26,8 +26,6 @@ db.sequelize = sequelize
 
 db.books = require("./models/book.model")(sequelize, DataTypes)
 
-db.users = require("./models/user.model")(sequelize, DataTypes)
-
 // migrate code
 
 sequelize.sync({force : true}).then(()=>{
