@@ -1,23 +1,17 @@
 const express = require("express")
 const { fetchBooks, addBooks, deleteBooks, editBooks, } = require("./database/connection")
 
-require("./routes/bookRoute")
+const bookRoute = require("./routes/bookRoute")
 
+// let app = require("express")()
 const app = express()
-
 require("./database/connection")
 app.use(express.json())
-// let app = require("express")()
 
-app.use("",bookRoute)
-
-app.get("/books",fetchBooks)
-app.post("/books",addBooks)
-app.delete("/books/:id",deleteBooks)
-app.patch("/books/:id",editBooks)
+// localhost:4000/api/books 
+app.use("/api",bookRoute)
 
 
-postgresql://postgres.bcvvahchzmzecehwmhad:@sushit3061@@aws-0-ap-south-1.pooler.supabase.com:6543/postgres
 
 app.listen(4000,function() {
     console.log ("Project /backend has started at port 4000")
