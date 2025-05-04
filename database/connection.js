@@ -28,7 +28,7 @@ db.books = require("./models/book.model")(sequelize, DataTypes)
 
 // migrate code
 
-sequelize.sync({force : true}).then(()=>{
+sequelize.sync({alter : true}).then(()=>{
     console.log("Migrate vayo!")
 });
 
