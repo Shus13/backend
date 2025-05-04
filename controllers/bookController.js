@@ -1,5 +1,5 @@
 
-const { books } = require("./database/connection")
+const { books } = require("../database/connection")
 
 exports.fetchBooks = async function(req,res) {
     // logic to fetch books from database
@@ -12,7 +12,7 @@ exports.fetchBooks = async function(req,res) {
 
 exports.addBooks = async function(req,res) {
     // logic to add book to database goes here...
-    console.log(req.body)
+    // console.log(req.body)
     // const bookName = req.body.bookName
     // const bookPrice = req.body.bookPrice
 
@@ -34,7 +34,7 @@ exports.addBooks = async function(req,res) {
 exports.deleteBooks = function(req,res){
     // logic to delete book
     res.json({
-        message : "Book added successfully"
+        message : "Book deleted successfully"
     })
 }
 
@@ -42,5 +42,20 @@ exports.editBooks = function(req,res){
     // logic to update book
     res.json({
         message : "Book updated successfully"
+    })
+}
+
+exports.singleFetchBook = async function(req,res) {
+    const id = req.param.id
+    const datas = await books.findByPk(id)
+    const datass = await books.findAll({
+        where : {
+            id : id
+        }
+    })
+    res.json ({
+        message : "single book fetched successfully",
+        datas,
+        datass
     })
 }
